@@ -1,0 +1,27 @@
+{
+  "name": "express-starter-template",
+  "version": "1.0.0",
+  "description": "A package to generate boilerplate expressjs code for nodejs",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jayeshsadhwani99/express-starter-template"
+  },
+  "bugs": {
+    "url": "https://github.com/jayeshsadhwani99/express-starter-template/issues"
+  },
+  "homepage": "https://github.com/jayeshsadhwani99/express-starter-template#readme",
+  "keywords": [
+    "Express",
+    "Typescript"
+  ],
+  "author": "Jayesh",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {
+    "inquirer": "^8.2.0"
+  }
+}
