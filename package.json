@@ -2,6 +2,7 @@
   "name": "express-starter-template",
   "version": "1.0.0",
   "description": "A package to generate boilerplate expressjs code for nodejs",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
