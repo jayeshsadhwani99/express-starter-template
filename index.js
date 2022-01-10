@@ -1,9 +1,8 @@
 import { copy } from "fs-extra";
 import { readFile, writeFile } from "fs";
 import inquirer from "inquirer";
+import { spawn } from "child_process";
 const { prompt } = inquirer;
-
-import { exec } from "child_process";
 
 // Ask for language
 prompt([
@@ -38,6 +37,7 @@ prompt([
   const cwd = process.cwd();
   await copy(source, `${cwd}/${name}`).catch((e) => console.log(e));
 
+  // Change package.json package name
   const packageJson = `${cwd}\\${name}\\package.json`;
   readFile(packageJson, (err, d) => {
     if (err) {
@@ -51,21 +51,30 @@ prompt([
     }
   });
 
-  // exec(`cd ${cwd}/${name}&&npm install`, (error, stdout, stderr) => {
-  //   if (error) {
-  //     console.log(`error: ${error.message}`);
-  //     return;
-  //   }
-  //   if (stderr) {
-  //     console.log(`stderr: ${stderr}`);
-  //     return;
-  //   }
-  //   console.log(`stdout: ${stdout}`);
-  // });
+  console.log("\x1b[32m", "Files created successfully.", "\x1b[0m");
 
-  console.log(
-    "\x1b[32m",
-    "Files created successfully. Happy Coding!",
-    "\x1b[0m"
-  );
+  // Install node modules
+  // prompt([
+  //   {
+  //     type: "confirm",
+  //     message: "Install node modules?",
+  //     name: "install",
+  //   },
+  // ]).then(({ install }) => {
+  //   if (install) {
+  //     npmInstall = spawn(`cd ${cwd}\\${name}&&npm install`);
+
+  //     npmInstall.stdout.on("data", function (data) {
+  //       console.log(data.toString());
+  //     });
+
+  //     npmInstall.stderr.on("data", function (data) {
+  //       console.log(data.toString());
+  //     });
+
+  //     npmInstall.on("exit", function (code) {
+  //       console.log("child process exited with code " + code.toString());
+  //     });
+  //   }
+  // });
 });
