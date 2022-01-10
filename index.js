@@ -1,4 +1,5 @@
 import { copy } from "fs-extra";
+import { readFile, writeFile } from "fs";
 import inquirer from "inquirer";
 const { prompt } = inquirer;
 
@@ -37,17 +38,30 @@ prompt([
   const cwd = process.cwd();
   await copy(source, `${cwd}/${name}`).catch((e) => console.log(e));
 
-  exec(`cd ${cwd}/${name}&&npm install`, (error, stdout, stderr) => {
-    if (error) {
-      console.log(`error: ${error.message}`);
-      return;
+  const packageJson = `${cwd}\\${name}\\package.json`;
+  readFile(packageJson, (err, d) => {
+    if (err) {
+      console.log(err);
+    } else {
+      let data = JSON.parse(d);
+      data.name = name;
+      writeFile(packageJson, JSON.stringify(data), (err) => {
+        if (err) console.log(err);
+      });
     }
-    if (stderr) {
-      console.log(`stderr: ${stderr}`);
-      return;
-    }
-    console.log(`stdout: ${stdout}`);
   });
+
+  // exec(`cd ${cwd}/${name}&&npm install`, (error, stdout, stderr) => {
+  //   if (error) {
+  //     console.log(`error: ${error.message}`);
+  //     return;
+  //   }
+  //   if (stderr) {
+  //     console.log(`stderr: ${stderr}`);
+  //     return;
+  //   }
+  //   console.log(`stdout: ${stdout}`);
+  // });
 
   console.log(
     "\x1b[32m",
