@@ -1,8 +1,15 @@
+#!/usr/bin/env node
 import { copy } from "fs-extra";
-import { readFile, writeFile } from "fs";
+import { readFile, writeFile } from "fs/promises";
 import inquirer from "inquirer";
 import { spawn } from "child_process";
+import { dirname, resolve } from "path";
+import { fileURLToPath } from "url";
 const { prompt } = inquirer;
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const srcFolder = resolve(__dirname, "src");
 
 // Ask for language
 prompt([
@@ -21,9 +28,9 @@ prompt([
   let source = "";
   //   Check for language
   if (language == "Typescript") {
-    source = "./src/TypeScript";
+    source = `${srcFolder}\\Typescript`;
   } else if (language == "Javascript") {
-    source = "./src/Javascript";
+    source = `${srcFolder}\\Javascript`;
   } else {
     console.log("Invalid language");
   }
@@ -35,11 +42,11 @@ prompt([
 
   // Get the current directory
   const cwd = process.cwd();
-  await copy(source, `${cwd}/${name}`).catch((e) => console.log(e));
+  await copy(source, `${cwd}\\${name}`).catch((e) => console.log(e));
 
   // Change package.json package name
   const packageJson = `${cwd}\\${name}\\package.json`;
-  readFile(packageJson, (err, d) => {
+  await readFile(packageJson, (err, d) => {
     if (err) {
       console.log(err);
     } else {
@@ -49,7 +56,7 @@ prompt([
         if (err) console.log(err);
       });
     }
-  });
+  }).catch((e) => console.log(e));
 
   console.log("\x1b[32m", "Files created successfully.", "\x1b[0m");
 

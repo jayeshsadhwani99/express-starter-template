@@ -1,9 +1,12 @@
 {
   "name": "express-starter-template",
-  "version": "1.0.0",
+  "version": "1.0.7",
   "description": "A package to generate boilerplate expressjs code for nodejs",
   "type": "module",
   "main": "index.js",
+  "bin": "./index.js",
+  "author": "Jayesh",
+  "license": "MIT",
   "scripts": {
     "start": "node index.js"
   },
@@ -16,13 +19,13 @@
   },
   "homepage": "https://github.com/jayeshsadhwani99/express-starter-template#readme",
   "keywords": [
-    "Express",
-    "Typescript"
+    "express",
+    "typescript",
+    "ts",
+    "start"
   ],
-  "author": "Jayesh",
-  "license": "MIT",
-  "devDependencies": {},
   "dependencies": {
+    "fs-extra": "^10.0.0",
     "inquirer": "^8.2.0"
   }
 }
