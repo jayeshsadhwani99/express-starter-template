@@ -2,7 +2,7 @@
 import { copy } from "fs-extra";
 import { readFile, writeFile } from "fs/promises";
 import inquirer from "inquirer";
-import { spawn } from "child_process";
+import { exec, spawn } from "child_process";
 import { dirname, resolve } from "path";
 import { fileURLToPath } from "url";
 const { prompt } = inquirer;
@@ -61,27 +61,29 @@ prompt([
   console.log("\x1b[32m", "Files created successfully.", "\x1b[0m");
 
   // Install node modules
-  // prompt([
-  //   {
-  //     type: "confirm",
-  //     message: "Install node modules?",
-  //     name: "install",
-  //   },
-  // ]).then(({ install }) => {
-  //   if (install) {
-  //     npmInstall = spawn(`cd ${cwd}\\${name}&&npm install`);
+  prompt([
+    {
+      type: "confirm",
+      message: "Install node modules?",
+      name: "install",
+    },
+  ]).then(({ install }) => {
+    if (install) {
+      var npmInstall = exec(`cd ${cwd}\\${name}&&npm install`);
 
-  //     npmInstall.stdout.on("data", function (data) {
-  //       console.log(data.toString());
-  //     });
+      var twirlTimer = (function () {
+        var P = ["\\", "|", "/", "-"];
+        var x = 0;
+        return setInterval(function () {
+          process.stdout.write("\r" + P[x++]);
+          x &= 3;
+        }, 250);
+      })();
 
-  //     npmInstall.stderr.on("data", function (data) {
-  //       console.log(data.toString());
-  //     });
-
-  //     npmInstall.on("exit", function (code) {
-  //       console.log("child process exited with code " + code.toString());
-  //     });
-  //   }
-  // });
+      npmInstall.on("exit", function (code) {
+        console.log("child process exited with code " + code.toString());
+        process.exit();
+      });
+    }
+  });
 });

@@ -1,6 +1,6 @@
 {
   "name": "express-starter-template",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "A package to generate boilerplate expressjs code for nodejs",
   "type": "module",
   "main": "index.js",
